@@ -1,0 +1,25 @@
+<project basedir="./" default="main">
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="./" destdir="build/classes/"/>
+    </target>
+
+    <target name="jar">
+        <jar destfile="a2-[7702]-[Sirius].jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="RRT"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run">
+        <java jar="a2-[7702]-[Sirius].jar" fork="true"/>
+    </target>
+	
+	<target name="main" depends="clean,compile,jar"/>
+</project>

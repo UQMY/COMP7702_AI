@@ -1,0 +1,47 @@
+<!--Build file for Assignment 3 MDP-->
+<project name="a3-7702-sirius" basedir='.' default="main">
+
+    <property name="src.dir" value="src" />
+	
+    <property name="build.dir" value="build" />
+    <property name="classes.dir" value="${build.dir}/classes" />
+    <property name="jars.dir" value="${build.dir}/jars" />
+	
+    <property name="jar-name" value="${ant.project.name}.jar" />
+    <property name="main-class" value="solver.Runner" />
+
+	<!-- Compile -->
+    <target name="compile">
+    		<mkdir dir="${classes.dir}" />
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" />
+    </target>
+
+	<!-- Jar -->
+    <target name="jar" depends ="compile">
+    		<mkdir dir="${jars.dir}"/>
+        <jar jarfile="${jars.dir}/${jar-name}" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}" />
+            </manifest>
+        </jar>
+    		<copy file="${jars.dir}/${jar-name}" tofile="${jar-name}"/>
+    </target>
+	
+	<!-- Run -->
+	<target name="run" depends="jar">
+		<java jar="${jars.dir}/${jar-name}" fork="true" />
+	</target>
+
+	<!-- Clean -->
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    		<delete file="${jar-name}" />
+    </target>
+	
+	<!-- Clean and Build -->
+	<target name="clean-build" depends="clean, jar" />
+	
+	<!-- Main -->
+	<target name="main" depends="clean, run" />
+
+</project>
